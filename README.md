@@ -14,6 +14,7 @@ Cloudflare tunnel.
 
 ## Contents
 
+- [Architecture](#architecture)
 - [Components](#components)
 - [Quick start](#quick-start)
 - [Changing dates and route](#changing-dates-and-route)
@@ -22,6 +23,10 @@ Cloudflare tunnel.
 - [Authentication: JWT and subscription key](#authentication-jwt-and-subscription-key)
 
 ---
+
+## Architecture
+
+<img src="assets/architecture.svg" alt="FlightsBot architecture: the monitoring scripts and Gotify run in Docker on a Windows PC; cloudflared exposes Gotify through a Cloudflare tunnel to the phone" width="100%">
 
 ## Components
 
