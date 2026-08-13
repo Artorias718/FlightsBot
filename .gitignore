@@ -1,0 +1,11 @@
+# Credenziali — non vanno mai versionate
+jwt.txt
+subkey.txt
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+last_count.txt
+

@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  gotify:
+    image: gotify/server
+    ports:
+      - "9000:80"
+    volumes:
+      - gotify_data:/app/data
+    restart: unless-stopped
+
+  app:
+    build: .
+    depends_on:
+      - gotify
+    environment:
+      GOTIFY_URL: "http://gotify"
+      GOTIFY_TOKEN: ${GOTIFY_TOKEN}
+    restart: unless-stopped
+
+volumes:
+  gotify_data:

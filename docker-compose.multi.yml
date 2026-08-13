@@ -1,0 +1,23 @@
+# File di overlay: si usa INSIEME a docker-compose.yml, che resta intatto.
+#
+#   avvio:   docker compose -f docker-compose.yml -f docker-compose.multi.yml up -d app-multi
+#   log:     docker compose -f docker-compose.yml -f docker-compose.multi.yml logs -f app-multi
+#   stop:    docker compose -f docker-compose.yml -f docker-compose.multi.yml stop app-multi
+#
+# Nominando solo "app-multi" i container gotify e app (monitor_single.py) non vengono toccati.
+
+services:
+  app-multi:
+    # stesso Dockerfile del servizio app: i layer sono già in cache, la build è immediata
+    build: .
+    depends_on:
+      - gotify
+    environment:
+      GOTIFY_TOKEN: ${GOTIFY_TOKEN}
+    volumes:
+      # lo script non è nell'immagine (il Dockerfile copia solo monitor_single.py): lo monto
+      - ./monitor_multi.py:/app/monitor_multi.py:ro
+      # stato persistente sull'host, così un riavvio non rimanda il report iniziale
+      - ./flight_state_multi.json:/app/flight_state_multi.json
+    command: ["python", "monitor_multi.py"]
+    restart: unless-stopped
